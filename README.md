@@ -1,28 +1,19 @@
 # DNA_RNG
 
-/*
-This is a simple dna geny. It is using random numbers to create encoded dna and then store the vaules in a double linked list. It has a much more efffective way of storing the dna vaules then just char vars.
 
-Planned Things to add, function markers to detect diffreant things that the dna is making
-A parrale linked list to help with climbing and decending the linked list and stroring artifacts that the dna has created. In addation I plan on making it catch the rtifacts that it has created.
+This is a simple DNA generator. It uses random numbers to create encoded DNA and then stores the values in a double-linked list. This method is more efficient for storing DNA values than just using char variables and can hold more then just array I have 6 bytes per 15 links.
 
-Added seeds so that the rng can be seed based, I think this will be intreasting to see how many artifacts are produced that match dna that has be cataloged for other anamials.
+Planned things to add include function markers to detect different things that the DNA is creating, a parallel linked list to help with climbing and descending the linked list, and storing artifacts that the DNA has created. Additionally, I plan on making it catch the artifacts that it has created.
 
-Files streaming to stream in and stream out dna and artifacts.
+I plan to add seeds so that the RNG so it can be seed-based. I think this will be interesting to see how many artifacts are produced that match DNA that has been cataloged for other animals.
 
-Memmory alloc, to set the amount of dna and memorry that the user would like
+File streaming to stream in and stream out DNA and artifacts.
 
+Memory allocation to set the amount of DNA and memory that the user would like.
 
+Stretch goals:
 
-strech goals /////////
+    GUI
+    Cross-check with the Human Genome Project
 
-GUI
-
-Cross check with human genom project
-
-
-
-Some bugs-> I had to wrap my functions in a struct in a fucntion header else it could not resovle the function call, no idea why I plan on fixing that soon but its really far out.
-
-
-*/
+Some bugs: I had to wrap my functions in a struct in a function header; otherwise, it could not resolve the function call. I have no idea why, but I plan on fixing that soon, although it's low prio, I am only using function for formating numbers.
