@@ -176,6 +176,9 @@
     <ClInclude Include="VENDORS\Includes\imstb_textedit.h" />
     <ClInclude Include="VENDORS\Includes\imstb_truetype.h" />
   </ItemGroup>
+  <ItemGroup>
+    <Text Include="Store.txt" />
+  </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
   </ImportGroup>
