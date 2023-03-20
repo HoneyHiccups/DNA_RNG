@@ -17,28 +17,10 @@
 #endif
 #include <glfw3.h> // Will drag system OpenGL headers
 
-// [Win32] Our example includes a copy of glfw3.lib pre-compiled with VS2010 to maximize ease of testing and compatibility with old VS compilers.
-// To link with VS2010-era libraries, VS2015+ requires linking with legacy_stdio_definitions.lib, which we do using this pragma.
-// Your own project should not be affected, as you are likely to link with a newer binary of GLFW that is adequate for your version of Visual Studio.
-#if defined(_MSC_VER) && (_MSC_VER >= 1900) && !defined(IMGUI_DISABLE_WIN32_FUNCTIONS)
-#pragma comment(lib, "legacy_stdio_definitions")
-#endif
-
-// This example can also compile and run with Emscripten! See 'Makefile.emscripten' for details.
-#ifdef __EMSCRIPTEN__
-#include "../libs/emscripten/emscripten_mainloop_stub.h"
-#endif
-
-static void glfw_error_callback(int error, const char* description)
-{
-    fprintf(stderr, "GLFW Error %d: %s\n", error, description);
-}
-
 
 
 template <typename T>
 unsigned long long ittrate_node_setvals(NodeArrayOf<T>* node, int range,DNA* dnaptr);
-
 
 template <typename T>
 void ittrate_node_displaay(NodeArrayOf<T>* node, int range,DNA* dnaptr);
@@ -46,233 +28,62 @@ void ittrate_node_displaay(NodeArrayOf<T>* node, int range,DNA* dnaptr);
 template <typename T>
 unsigned long long ittrate_node_chain_size(NodeArrayOf<T>* node);
 
+template <typename T>
+void createnodes(NodeArrayOf<T>* node, int range);
+
+template <typename T>
+void destorynodes(NodeArrayOf<T>*& node, int range);
+
 // Main code
 
 
-int main(int, char**){
+int main(){
 
 
     DNA dna;
-    cout<<"I am getting error"<<endl;
+    cout<<"Creating Nodes"<<endl;
     unsigned long long index = 0;
     srand(time(NULL));
+    
+    NodeArrayOf<NucleotidesLink>* NODE_INDEX[1000];// create an array of 10 pointers to NodeArrayOf
+    //NodeArrayOf<NucleotidesLink>** CONST_NODE_INDEX = new NodeArrayOf<NucleotidesLink>*[1000]; // this is the heap alloc 
+    //not sure if I need to use that however I will allso need to destory the pointers if needed 
+    // delteing the alloc memmory if need for the  dma//
+    //for (int i = 0; i < 1000; i++) {delete CONST_NODE_INDEX[i];}delete[] CONST_NODE_INDEX;
 
-    NodeArrayOf<NucleotidesLink>* Node00 = new NodeArrayOf<NucleotidesLink>(NULL);
-    NodeArrayOf<NucleotidesLink>* Node01 = new NodeArrayOf<NucleotidesLink>(Node00);
-    NodeArrayOf<NucleotidesLink>* Node02 = new NodeArrayOf<NucleotidesLink>(Node01);
-    NodeArrayOf<NucleotidesLink>* Node03 = new NodeArrayOf<NucleotidesLink>(Node02);
-    NodeArrayOf<NucleotidesLink>* Node04 = new NodeArrayOf<NucleotidesLink>(Node03);
-    NodeArrayOf<NucleotidesLink>* Node05 = new NodeArrayOf<NucleotidesLink>(Node04);
-    NodeArrayOf<NucleotidesLink>* Node06 = new NodeArrayOf<NucleotidesLink>(Node05);
-    NodeArrayOf<NucleotidesLink>* Node07 = new NodeArrayOf<NucleotidesLink>(Node06);
-    NodeArrayOf<NucleotidesLink>* Node08 = new NodeArrayOf<NucleotidesLink>(Node07);
-    NodeArrayOf<NucleotidesLink>* Node09 = new NodeArrayOf<NucleotidesLink>(Node08);
-    NodeArrayOf<NucleotidesLink>* Node10 = new NodeArrayOf<NucleotidesLink>(Node09);
-    NodeArrayOf<NucleotidesLink>* Node11 = new NodeArrayOf<NucleotidesLink>(Node10);
-    NodeArrayOf<NucleotidesLink>* Node12 = new NodeArrayOf<NucleotidesLink>(Node11);
-    NodeArrayOf<NucleotidesLink>* Node13 = new NodeArrayOf<NucleotidesLink>(Node12);
-    NodeArrayOf<NucleotidesLink>* Node14 = new NodeArrayOf<NucleotidesLink>(Node13);
-    NodeArrayOf<NucleotidesLink>* Node15 = new NodeArrayOf<NucleotidesLink>(Node14);
-    NodeArrayOf<NucleotidesLink>* Node16 = new NodeArrayOf<NucleotidesLink>(Node15);
-    NodeArrayOf<NucleotidesLink>* Node17 = new NodeArrayOf<NucleotidesLink>(Node16);
-    NodeArrayOf<NucleotidesLink>* Node18 = new NodeArrayOf<NucleotidesLink>(Node17);
-    NodeArrayOf<NucleotidesLink>* Node19 = new NodeArrayOf<NucleotidesLink>(Node18);
-    NodeArrayOf<NucleotidesLink>* Node20 = new NodeArrayOf<NucleotidesLink>(Node19);
-    NodeArrayOf<NucleotidesLink>* Node21 = new NodeArrayOf<NucleotidesLink>(Node20);
-    NodeArrayOf<NucleotidesLink>* Node22 = new NodeArrayOf<NucleotidesLink>(Node21);
-    NodeArrayOf<NucleotidesLink>* Node23 = new NodeArrayOf<NucleotidesLink>(Node22);
-    NodeArrayOf<NucleotidesLink>* Node24 = new NodeArrayOf<NucleotidesLink>(Node23);
-    NodeArrayOf<NucleotidesLink>* Node25 = new NodeArrayOf<NucleotidesLink>(Node24);
+    for (int i = 999; i>=0; i--){NODE_INDEX[i] = NULL;}
+    
+    //------------ TO DO -----------//
+    //Some things that needed to be added is to clear the memory of the node network atm it dose not have a clear function
+    //In addation I will be adding some gui interface to set how big of a node network the user woulf like
+    //Then I will work on gui for displaying instead of using a cout function call 
+    //Maybe stream imagines or maybe 3d not sure yet 
+    
+    
+    NodeArrayOf<NucleotidesLink>* CurrentNode = new NodeArrayOf<NucleotidesLink>(NULL);
+    
 
-
-
-
-    index = ittrate_node_setvals<NucleotidesLink>(Node00,1,&dna);
-    ittrate_node_displaay<NucleotidesLink>(Node00,1,&dna);
-
-
-    cout<<ofunc::format_int<unsigned long long>(index)<<" Links in the DNA Chain"<<endl;
-    cout<<(ittrate_node_chain_size<NucleotidesLink>(Node00)/1024)<<" kbs of memory used to make chain"<<endl<<"enter number to exit"<<endl;
-    cout<<"The size of the node is: "<<sizeof(Node25->Data)+sizeof(Node25)<<endl;
+    for (int i = 0; i<600; i++){
+        NODE_INDEX[i] = CurrentNode;  CurrentNode = CurrentNode->new_node();
+       // odd that I am storing a an index of the bouble linked list, however it is just a reflection and 
+       //is not to be completly acurete I will be using it as a bookmark function I will switch null when editing linked list
+      // this will allow for accsing parts on the list quickly however in an inverted binaray search
+          
+    }
     
 
 
-    glfwSetErrorCallback(glfw_error_callback);
-    if (!glfwInit())
-        return 1;
 
-    // Decide GL+GLSL versions
-#if defined(IMGUI_IMPL_OPENGL_ES2)
-    // GL ES 2.0 + GLSL 100
-    const char* glsl_version = "#version 100";
-    glfwWindowHint(GLFW_CONTEXT_VERSION_MAJOR, 2);
-    glfwWindowHint(GLFW_CONTEXT_VERSION_MINOR, 0);
-    glfwWindowHint(GLFW_CLIENT_API, GLFW_OPENGL_ES_API);
-#elif defined(__APPLE__)
-    // GL 3.2 + GLSL 150
-    const char* glsl_version = "#version 150";
-    glfwWindowHint(GLFW_CONTEXT_VERSION_MAJOR, 3);
-    glfwWindowHint(GLFW_CONTEXT_VERSION_MINOR, 2);
-    glfwWindowHint(GLFW_OPENGL_PROFILE, GLFW_OPENGL_CORE_PROFILE);  // 3.2+ only
-    glfwWindowHint(GLFW_OPENGL_FORWARD_COMPAT, GL_TRUE);            // Required on Mac
-#else
-    // GL 3.0 + GLSL 130
-    const char* glsl_version = "#version 130";
-    glfwWindowHint(GLFW_CONTEXT_VERSION_MAJOR, 3);
-    glfwWindowHint(GLFW_CONTEXT_VERSION_MINOR, 0);
-    //glfwWindowHint(GLFW_OPENGL_PROFILE, GLFW_OPENGL_CORE_PROFILE);  // 3.2+ only
-    //glfwWindowHint(GLFW_OPENGL_FORWARD_COMPAT, GL_TRUE);            // 3.0+ only
-#endif
 
-    // Create window with graphics context
-    GLFWwindow* window = glfwCreateWindow(1280, 720, "Dear ImGui GLFW+OpenGL3 example", NULL, NULL);
-    if (window == NULL)
-        return 1;
-    glfwMakeContextCurrent(window);
-    glfwSwapInterval(0); // Enable vsync
 
-    // Setup Dear ImGui context
-    IMGUI_CHECKVERSION();
-    ImGui::CreateContext();
-    ImGuiIO& io = ImGui::GetIO(); (void)io;
-    io.ConfigFlags |= ImGuiConfigFlags_NavEnableKeyboard;     // Enable Keyboard Controls
-    io.ConfigFlags |= ImGuiConfigFlags_NavEnableGamepad;      // Enable Gamepad Controls
-    io.ConfigFlags |= ImGuiConfigFlags_DockingEnable;         // Enable Docking
-    io.ConfigFlags |= ImGuiConfigFlags_ViewportsEnable;       // Enable Multi-Viewport / Platform Windows
-    //io.ConfigViewportsNoAutoMerge = true;
-    //io.ConfigViewportsNoTaskBarIcon = true;
+    index = ittrate_node_setvals<NucleotidesLink>(NODE_INDEX[0],1000,&dna);
+    ittrate_node_displaay<NucleotidesLink>(NODE_INDEX[0],1,&dna);
 
-    // Setup Dear ImGui style
-    ImGui::StyleColorsDark();
-    //ImGui::StyleColorsLight();
 
-    // When viewports are enabled we tweak WindowRounding/WindowBg so platform windows can look identical to regular ones.
-    ImGuiStyle& style = ImGui::GetStyle();
-    if (io.ConfigFlags & ImGuiConfigFlags_ViewportsEnable)
-    {
-        style.WindowRounding = 0.0f;
-        style.Colors[ImGuiCol_WindowBg].w = 1.0f;
-    }
-
-    // Setup Platform/Renderer backends
-    ImGui_ImplGlfw_InitForOpenGL(window, true);
-    ImGui_ImplOpenGL3_Init(glsl_version);
-
-    // Load Fonts
-    // - If no fonts are loaded, dear imgui will use the default font. You can also load multiple fonts and use ImGui::PushFont()/PopFont() to select them.
-    // - AddFontFromFileTTF() will return the ImFont* so you can store it if you need to select the font among multiple.
-    // - If the file cannot be loaded, the function will return NULL. Please handle those errors in your application (e.g. use an assertion, or display an error and quit).
-    // - The fonts will be rasterized at a given size (w/ oversampling) and stored into a texture when calling ImFontAtlas::Build()/GetTexDataAsXXXX(), which ImGui_ImplXXXX_NewFrame below will call.
-    // - Use '#define IMGUI_ENABLE_FREETYPE' in your imconfig file to use Freetype for higher quality font rendering.
-    // - Read 'docs/FONTS.md' for more instructions and details.
-    // - Remember that in C/C++ if you want to include a backslash \ in a string literal you need to write a double backslash \\ !
-    // - Our Emscripten build process allows embedding fonts to be accessible at runtime from the "fonts/" folder. See Makefile.emscripten for details.
-    //io.Fonts->AddFontDefault();
-    //io.Fonts->AddFontFromFileTTF("c:\\Windows\\Fonts\\segoeui.ttf", 18.0f);
-    //io.Fonts->AddFontFromFileTTF("../../misc/fonts/DroidSans.ttf", 16.0f);
-    //io.Fonts->AddFontFromFileTTF("../../misc/fonts/Roboto-Medium.ttf", 16.0f);
-    //io.Fonts->AddFontFromFileTTF("../../misc/fonts/Cousine-Regular.ttf", 15.0f);
-    //ImFont* font = io.Fonts->AddFontFromFileTTF("c:\\Windows\\Fonts\\ArialUni.ttf", 18.0f, NULL, io.Fonts->GetGlyphRangesJapanese());
-    //IM_ASSERT(font != NULL);
-
-    // Our state
-    bool show_demo_window = true;
-    bool show_another_window = false;
-    ImVec4 clear_color = ImVec4(0.45f, 0.55f, 0.60f, 1.00f);
-
-    // Main loop
-#ifdef __EMSCRIPTEN__
-    // For an Emscripten build we are disabling file-system access, so let's not attempt to do a fopen() of the imgui.ini file.
-    // You may manually call LoadIniSettingsFromMemory() to load settings from your own storage.
-    io.IniFilename = NULL;
-    EMSCRIPTEN_MAINLOOP_BEGIN
-#else
-    while (!glfwWindowShouldClose(window))
-#endif
-    {
-        // Poll and handle events (inputs, window resize, etc.)
-        // You can read the io.WantCaptureMouse, io.WantCaptureKeyboard flags to tell if dear imgui wants to use your inputs.
-        // - When io.WantCaptureMouse is true, do not dispatch mouse input data to your main application, or clear/overwrite your copy of the mouse data.
-        // - When io.WantCaptureKeyboard is true, do not dispatch keyboard input data to your main application, or clear/overwrite your copy of the keyboard data.
-        // Generally you may always pass all inputs to dear imgui, and hide them from your application based on those two flags.
-        glfwPollEvents();
-
-        // Start the Dear ImGui frame
-        ImGui_ImplOpenGL3_NewFrame();
-        ImGui_ImplGlfw_NewFrame();
-        ImGui::NewFrame();
-
-        // 1. Show the big demo window (Most of the sample code is in ImGui::ShowDemoWindow()! You can browse its code to learn more about Dear ImGui!).
-        if (show_demo_window)
-            ImGui::ShowDemoWindow(&show_demo_window);
-
-        // 2. Show a simple window that we create ourselves. We use a Begin/End pair to create a named window.
-        {
-            static float f = 0.0f;
-            static int counter = 0;
-
-            ImGui::Begin("Hello, world!");                          // Create a window called "Hello, world!" and append into it.
-
-            ImGui::Text("This is some useful text.");               // Display some text (you can use a format strings too)
-            ImGui::Checkbox("Demo Window", &show_demo_window);      // Edit bools storing our window open/close state
-            ImGui::Checkbox("Another Window", &show_another_window);
-
-            ImGui::SliderFloat("float", &f, 0.0f, 1.0f);            // Edit 1 float using a slider from 0.0f to 1.0f
-            ImGui::ColorEdit3("clear color", (float*)&clear_color); // Edit 3 floats representing a color
-
-            if (ImGui::Button("Button"))                            // Buttons return true when clicked (most widgets return true when edited/activated)
-                counter++;
-            ImGui::SameLine();
-            ImGui::Text("counter = %d", counter);
-
-            ImGui::Text("Application average %.3f ms/frame (%.1f FPS)", 1000.0f / io.Framerate, io.Framerate);
-            ImGui::End();
-        }
-
-        // 3. Show another simple window.
-        if (show_another_window)
-        {
-            ImGui::Begin("Another Window", &show_another_window);   // Pass a pointer to our bool variable (the window will have a closing button that will clear the bool when clicked)
-            ImGui::Text("Hello from another window!");
-            if (ImGui::Button("Close Me"))
-                show_another_window = false;
-            ImGui::End();
-        }
-
-        // Rendering
-        ImGui::Render();
-        int display_w, display_h;
-        glfwGetFramebufferSize(window, &display_w, &display_h);
-        glViewport(0, 0, display_w, display_h);
-        glClearColor(clear_color.x * clear_color.w, clear_color.y * clear_color.w, clear_color.z * clear_color.w, clear_color.w);
-        glClear(GL_COLOR_BUFFER_BIT);
-        ImGui_ImplOpenGL3_RenderDrawData(ImGui::GetDrawData());
-
-        // Update and Render additional Platform Windows
-        // (Platform functions may change the current OpenGL context, so we save/restore it to make it easier to paste this code elsewhere.
-        //  For this specific demo app we could also call glfwMakeContextCurrent(window) directly)
-        if (io.ConfigFlags & ImGuiConfigFlags_ViewportsEnable)
-        {
-            GLFWwindow* backup_current_context = glfwGetCurrentContext();
-            ImGui::UpdatePlatformWindows();
-            ImGui::RenderPlatformWindowsDefault();
-            glfwMakeContextCurrent(backup_current_context);
-        }
-
-        glfwSwapBuffers(window);
-    }
-#ifdef __EMSCRIPTEN__
-    EMSCRIPTEN_MAINLOOP_END;
-#endif
-
-    // Cleanup
-    ImGui_ImplOpenGL3_Shutdown();
-    ImGui_ImplGlfw_Shutdown();
-    ImGui::DestroyContext();
-
-    glfwDestroyWindow(window);
-    glfwTerminate();
-
+    cout<<ofunc::format_int<unsigned long long>(index)<<" Links in the DNA Chain"<<endl;
+    cout<<(ittrate_node_chain_size<NucleotidesLink>(NODE_INDEX[0])/1024)<<" kbs of memory used to make chain"<<endl<<"enter number to exit"<<endl;
+    
+    //for (int i = 0; i < 1000; i++) {delete CONST_NODE_INDEX[i];}delete[] CONST_NODE_INDEX;
     return 0;
 }
 
@@ -314,9 +125,21 @@ while(node != nullptr){
 
   return size;
 }
-/*
-NodeArrayOf<NucleotidesLink>* addnode(){
-new NodeArrayOf<NucleotidesLink>(NULL);
-return ;
+
+template <typename T>
+void createnodes(NodeArrayOf<T>* node, int range){
+    node[0]= new NodeArrayOf<NucleotidesLink>(NULL);
+    for(int i = 1; i <= range; i++ ){
+        node[i]= new NodeArrayOf<NucleotidesLink>(node[i-1]);
+    }
 }
-*/
+
+template <typename T>
+void destorynodes(NodeArrayOf<T>*& node, int range){
+
+    for(int i = range; i>= 0; i--){
+    node->destroy();
+    }
+}
+
+ 

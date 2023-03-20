@@ -19,8 +19,8 @@ struct NodeArrayOf{
   }
 
   NodeArrayOf(NodeArrayOf *PrevioListNode){ // constructor sets pointer to past
-     Past = PrevioListNode;
-     Next = NULL;
+     this->Past = PrevioListNode;
+     this->Next = NULL;
 
      if(Past != NULL){
 	Past->Next = this;
@@ -35,5 +35,16 @@ struct NodeArrayOf{
     return index->Past;
   }
 
+
+  NodeArrayOf* new_node(){
+    
+      this->Next = new NodeArrayOf<T>(this);
+
+    return this->Next;  
+  }
+
+  void destroy(){ // should only be called in an tterration soon to be depecrated 
+  delete this;
+  }
 };
 
